@@ -59,7 +59,7 @@ pub fn win_event(
     ev_win: EventReader<WinEvent>,
     asset_server: Res<AssetServer>,
 ) {
-    if ev_win.len() > 0 {
+    if !ev_win.is_empty() {
         commands.spawn(Text2dBundle {
             text: Text::from_section(
                 "You Win!",

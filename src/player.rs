@@ -83,15 +83,19 @@ pub fn spawn_bullets(
     }
 }
 
+type EnemyQuery<'w, 's, 'a> =
+    Query<'w, 's, (Entity, &'a Transform), (With<Enemy>, Without<Bullet>)>;
+
 pub fn bullet_movement(
     mut commands: Commands,
     time: Res<Time>,
     mut query: Query<(Entity, &mut Transform, &Bullet), With<Bullet>>,
-    query_enemies: Query<(Entity, &Transform), (With<Enemy>, Without<Bullet>)>,
+    query_enemies: EnemyQuery,
     mut ev_score: EventWriter<ScoreEvent>,
 ) {
     for (entity, mut transform, bullet) in query.iter_mut() {
-        transform.translation += Vec3::new(bullet.velocity.x, bullet.velocity.y, 0.0) * time.delta_seconds();
+        transform.translation += Vec3::new(bullet.velocity.x, bullet.velocity.y, 0.0)
+            * time.delta_seconds();
 
         if transform.translation.y > SCREEN_HEIGHT {
             commands.entity(entity).despawn();
