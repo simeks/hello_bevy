@@ -53,6 +53,7 @@ fn main() {
             ui::score_events,
             ui::update_score,
         ).chain().after(player::bullet_movement))
+        .add_system(enemies::destroy_enemies.after(player::bullet_movement))
         .add_system(enemies::enemy_movement)
         .run();
 }

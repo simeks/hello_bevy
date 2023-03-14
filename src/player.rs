@@ -97,10 +97,12 @@ pub fn bullet_movement(
             commands.entity(entity).despawn();
         }
 
-        for (enemey_entity, enemy_transform) in query_enemies.iter() {
+        for (enemy_entity, enemy_transform) in query_enemies.iter() {
             if transform.translation.distance(enemy_transform.translation) < 20.0 {
                 commands.entity(entity).despawn();
-                commands.entity(enemey_entity).despawn();
+                // Defer destroying entities as they might get hit multiple times in a frame
+                commands.entity(enemy_entity)
+                    .insert(crate::enemies::Destroyed {});
 
                 ev_score.send(ScoreEvent {});
             }

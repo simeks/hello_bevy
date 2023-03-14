@@ -8,6 +8,9 @@ const VELOCITY: f32 = 20.0;
 #[derive(Component)]
 pub struct Enemy;
 
+#[derive(Component)]
+pub struct Destroyed;
+
 #[derive(PartialEq)]
 enum Direction {
     Left,
@@ -93,5 +96,14 @@ pub fn enemy_movement(
                 }
             }
         }
+    }
+}
+
+pub fn destroy_enemies(
+    mut commands: Commands,
+    query: Query<Entity, With<Destroyed>>,
+) {
+    for entity in query.iter() {
+        commands.entity(entity).despawn_recursive();
     }
 }
