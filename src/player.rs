@@ -70,8 +70,10 @@ pub fn spawn_bullets(
                     ..default()
                 },
                 texture: sprites.bullet.clone(),
-                transform: Transform::from_translation(event.position)
-                    .with_scale(Vec3::splat(5.0)),
+                transform: Transform::from_translation(
+                    event.position + Vec3::new(0.0, 20.0, 0.0)
+                    )
+                        .with_scale(Vec3::splat(5.0)),
                 ..default()
             },
             Bullet {
