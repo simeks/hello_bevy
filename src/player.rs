@@ -42,9 +42,11 @@ pub fn keyboard_input(
     for (mut transform, _) in query.iter_mut() {
         if keyboard_input.pressed(KeyCode::Left) {
             transform.translation.x -= VELOCITY * time.delta_seconds();
+            transform.translation.x = transform.translation.x.max(10.0);
         }
         if keyboard_input.pressed(KeyCode::Right) {
             transform.translation.x += VELOCITY * time.delta_seconds();
+            transform.translation.x = transform.translation.x.min(SCREEN_WIDTH - 10.0);
         }
         if keyboard_input.just_pressed(KeyCode::Space) {
             ev_bullet.send(crate::BulletEvent {
