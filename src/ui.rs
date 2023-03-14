@@ -6,15 +6,15 @@ use bevy::prelude::*;
 pub struct ScoreText;
 
 #[derive(Resource)]
-pub struct Scoreboard {
+pub struct Score {
     pub score: i32,
 }
 
-pub fn setup_scoreboard(
+pub fn setup_score_display(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
 ) {
-    commands.insert_resource(Scoreboard { score: 0 });
+    commands.insert_resource(Score { score: 0 });
 
     commands.spawn((
         Text2dBundle {
@@ -27,7 +27,7 @@ pub fn setup_scoreboard(
                 },
             )
                 .with_alignment(TextAlignment::Right),
-            transform: Transform::from_translation(Vec3::new(40.0, 20.0, 0.0)),
+            transform: Transform::from_translation(Vec3::new(40.0, 20.0, 1.0)),
             ..default()
         },
         ScoreText,
@@ -35,7 +35,7 @@ pub fn setup_scoreboard(
 }
 
 pub fn score_events(
-    mut scoreboard: ResMut<Scoreboard>,
+    mut scoreboard: ResMut<Score>,
     mut score_events: EventReader<ScoreEvent>,
 ) {
     for _ in score_events.iter() {
@@ -44,7 +44,7 @@ pub fn score_events(
 }
 
 pub fn update_score(
-    scoreboard: Res<Scoreboard>,
+    scoreboard: Res<Score>,
     mut query: Query<&mut Text, With<ScoreText>>,
 ) {
     if scoreboard.is_changed() {

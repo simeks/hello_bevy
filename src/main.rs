@@ -1,7 +1,7 @@
 mod art;
 mod enemies;
 mod player;
-mod scoreboard;
+mod ui;
 
 use art::Sprites;
 use bevy::{prelude::*, render::camera::ScalingMode};
@@ -42,7 +42,7 @@ fn main() {
             setup,
             player::setup_player,
             enemies::setup_enemies,
-            scoreboard::setup_scoreboard,
+            ui::setup_score_display,
         ).chain())
         .add_systems((
             player::keyboard_input,
@@ -50,8 +50,8 @@ fn main() {
         ).chain())
         .add_system(player::bullet_movement)
         .add_systems((
-            scoreboard::score_events,
-            scoreboard::update_score,
+            ui::score_events,
+            ui::update_score,
         ).chain().after(player::bullet_movement))
         .add_system(enemies::enemy_movement)
         .run();
