@@ -1,4 +1,4 @@
-use crate::ScoreEvent;
+use crate::{SCREEN_WIDTH, SCREEN_HEIGHT, ScoreEvent, WinEvent};
 
 use bevy::prelude::*;
 
@@ -51,5 +51,29 @@ pub fn update_score(
         for mut text in query.iter_mut() {
             text.sections[0].value = format!("Score: {}", scoreboard.score);
         }
+    }
+}
+
+pub fn win_event(
+    mut commands: Commands,
+    ev_win: EventReader<WinEvent>,
+    asset_server: Res<AssetServer>,
+) {
+    if ev_win.len() > 0 {
+        commands.spawn(Text2dBundle {
+            text: Text::from_section(
+                "You Win!",
+                TextStyle {
+                    font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                    font_size: 40.0,
+                    color: Color::WHITE,
+                },
+            )
+                .with_alignment(TextAlignment::Center),
+            transform: Transform::from_translation(
+                Vec3::new(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0, 1.0)
+            ),
+            ..default()
+        });
     }
 }

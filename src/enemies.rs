@@ -1,5 +1,5 @@
 use crate::art::Sprites;
-use crate::{SCREEN_WIDTH, SCREEN_HEIGHT};
+use crate::{SCREEN_WIDTH, SCREEN_HEIGHT, WinEvent};
 use bevy::prelude::*;
 
 const NUM_ENEMIES: usize = 15;
@@ -105,5 +105,15 @@ pub fn destroy_enemies(
 ) {
     for entity in query.iter() {
         commands.entity(entity).despawn_recursive();
+    }
+}
+
+/// Check win condition
+pub fn check_win(
+    query: Query<&Enemy>,
+    mut ev_win: EventWriter<WinEvent>,
+) {
+    if query.iter().count() == 0 {
+        ev_win.send(WinEvent);
     }
 }

@@ -21,6 +21,7 @@ pub struct BulletEvent {
 }
 
 pub struct ScoreEvent;
+pub struct WinEvent;
 
 fn main() {
     App::new()
@@ -38,6 +39,7 @@ fn main() {
         .init_resource::<Sprites>()
         .add_event::<BulletEvent>()
         .add_event::<ScoreEvent>()
+        .add_event::<WinEvent>()
         .add_startup_systems((
             setup,
             player::setup_player,
@@ -53,8 +55,12 @@ fn main() {
             ui::score_events,
             ui::update_score,
         ).chain().after(player::bullet_movement))
-        .add_system(enemies::destroy_enemies.after(player::bullet_movement))
+        .add_systems((
+            enemies::destroy_enemies,
+            enemies::check_win
+        ).chain().after(player::bullet_movement))
         .add_system(enemies::enemy_movement)
+        .add_system(ui::win_event)
         .run();
 }
 
