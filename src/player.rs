@@ -26,7 +26,7 @@ pub fn setup_player(
             },
             texture: sprites.player.clone(),
             transform: Transform::from_translation(Vec3::new(0.5*SCREEN_WIDTH, 20., 0.))
-                .with_scale(Vec3::splat(5.0)),
+                .with_scale(Vec3::splat(2.0)),
             ..default()
         },
         Player
@@ -73,7 +73,7 @@ pub fn spawn_bullets(
                 transform: Transform::from_translation(
                     event.position + Vec3::new(0.0, 20.0, 0.0)
                     )
-                        .with_scale(Vec3::splat(5.0)),
+                        .with_scale(Vec3::splat(2.0)),
                 ..default()
             },
             Bullet {

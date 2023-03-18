@@ -46,7 +46,7 @@ pub fn setup_enemies(
                         SCREEN_HEIGHT - 20.0 - (row as f32) * 40.0,
                         0.0,
                     ))
-                        .with_scale(Vec3::splat(5.0)),
+                        .with_scale(Vec3::splat(2.0)),
                     ..default()
                 },
                 Enemy,
